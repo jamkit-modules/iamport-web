@@ -1,0 +1,11 @@
+=begin sbml
+
+=object web: id=${web-id}.web, filename=${dir-path}/iamport.html, base-url=http://localhost, \
+            javascript-bridge="__$_bridge", uses-browser-user-agent=yes, \
+            content-script@start=${dir-path}/cleanup.js, \
+            script-when-loaded=${web-prefix}__on_web_loaded, \
+            console-message-enabled=yes, style=web
+
+=object progress: type=loading, owner=${web-id}.web, style=progress_web
+
+=end sbml
