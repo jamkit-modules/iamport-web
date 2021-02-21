@@ -8,18 +8,19 @@ function initialize(config, onResult, onError) {
     }
 }
 
-function requestPayment(provider, method, orderId, amount, title, billingInfo, onResult, onError) {
+function requestPayment(gateway, product, orderId, billingId, billingInfo, onResult, onError) {
     IMP.request_pay({
-        "pg": provider,
-        "pay_method": method,
-        "merchant_uid": orderId || 'ORD' + Date.now(),
-        "name": title, //'주문명:결제테스트',
-        "amount": amount, //14000,
+        "pg": gateway["provider"],
+        "pay_method": gateway["method"],
+        "merchant_uid": orderId,
+        "customer_uid": billingId,
+        "name": product["title"], //'주문명:결제테스트',
+        "amount": product["price"], //14000,
         "buyer_email": billingInfo["email"], //'iamport@siot.do',
         "buyer_name": billingInfo["name"], //'구매자이름',
         "buyer_tel": billingInfo["phone-number"], //'010-1234-5678',
         "buyer_addr": billingInfo["address"], //'서울특별시 강남구 삼성동',
-        "buyer_postcode": billingInfo["postcode"], //'123-456'
+        "buyer_postcode": billingInfo["postcode"], // '123-456'
     }, function(response) {
         if (response.success) {
             onResult({

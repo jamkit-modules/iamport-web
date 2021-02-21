@@ -9,7 +9,7 @@ var module = (function() {
         if (data["url"].startsWith("http://localhost")) {
             webjs.import(_dir_path + "/iamport.js");
             webjs.call("initialize", [ _config ])
-                .then(function(user) {
+                .then(function() {
                     _handlers.forEach(function(handler) {
                         handler();
                     });
@@ -42,10 +42,10 @@ var module = (function() {
             return this;
         },
 
-        request_payment: function(provider, method, order_id, amount, title, billing_info) {
+        request_payment: function(gateway, product, order_id, biiling_id, billing_info) {
             return new Promise(function(resolve, reject) {
                 var handler = function() {
-                    webjs.call("requestPayment", [ provider, method, order_id, amount, title, billing_info ])
+                    webjs.call("requestPayment", [ gateway, product, order_id, biiling_id, billing_info ])
                         .then(function(result) {
                             resolve(result);
                         })
